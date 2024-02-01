@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Page</title>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- Your custom CSS styles -->
+    <style>
+        .element-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+        .editable-cell {
+            border: 1px solid #ccc;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-3">
+        <h1>Saved Page</h1>
+        <div id="savedPage" class="element-container">
+            <!-- Load the saved content here -->
+            <?php
+                echo file_get_contents('saved_page.html');
+            ?>
+        </div>
+    </div>
+    <!-- Link to Bootstrap JS for popovers -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        // Make the elements non-editable when clicked
+        var savedPage = document.getElementById('savedPage');
+        savedPage.addEventListener('click', function(event) {
+            if (event.target && event.target.classList.contains('editable-cell')) {
+                event.target.contentEditable = 'true';
+                event.target.focus();
+                event.target.addEventListener('blur', function() {
+                    event.target.contentEditable = 'false';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

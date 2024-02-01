@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Table Content</title>
+</head>
+<body>
+
+<h1>Table Content</h1>
+
+<div id="table-content-container"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Retrieve the table data from localStorage
+    var tableData = JSON.parse(localStorage.getItem("tableData"));
+    
+    if (tableData) {
+        var rowCount = tableData.length;
+        var colCount = tableData[0].length;
+
+        // Create a table element
+        var table = document.createElement("table");
+
+        // Create table headers
+        var headerRow = table.insertRow(0);
+        for (var j = 0; j < colCount; j++) {
+            var header = headerRow.insertCell(j);
+            header.innerHTML = "Header " + (j + 1);
+        }
+
+        // Populate table data
+        for (var i = 0; i < rowCount; i++) {
+            var row = table.insertRow(i + 1);
+            for (var j = 0; j < colCount; j++) {
+                var cell = row.insertCell(j);
+                cell.innerHTML = tableData[i][j];
+            }
+        }
+
+        // Add the table to the table-content-container div
+        var tableContentContainer = document.getElementById("table-content-container");
+        tableContentContainer.appendChild(table);
+    }
+});
+</script>
+
+</body>
+</html>

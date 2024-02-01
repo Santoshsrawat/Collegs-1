@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Table Example</title>
+</head>
+<body>
+
+<div>
+    <label for="rowCount">Number of Rows: </label>
+    <input type="number" id="rowCount">
+</div>
+<div>
+    <label for="colCount">Number of Columns: </label>
+    <input type="number" id="colCount">
+</div>
+<div>
+    <button onclick="createDynamicTable()">Create Table</button>
+    <button onclick="submitTable()">Submit</button>
+</div>
+<div id="table-container"></div>
+
+<script>
+function createDynamicTable() {
+    var rowCount = parseInt(document.getElementById("rowCount").value);
+    var colCount = parseInt(document.getElementById("colCount").value);
+
+    // Create a table element
+    var table = document.createElement("table");
+
+    // Create table headers (table row and table headers)
+    var headerRow = table.insertRow(0);
+    for (var j = 0; j < colCount; j++) {
+        var header = headerRow.insertCell(j);
+        header.innerHTML = "Header " + (j + 1);
+    }
+
+    // Create table data (rows and cells with input fields)
+    for (var i = 1; i <= rowCount; i++) {
+        var row = table.insertRow(i);
+        for (var j = 0; j < colCount; j++) {
+            var cell = row.insertCell(j);
+            var input = document.createElement("input");
+            input.type = "text";
+            input.name = "cell" + i + "_" + j;
+            cell.appendChild(input);
+        }
+    }
+
+    // Add the table to the table-container div
+    var tableContainer = document.getElementById("table-container");
+    tableContainer.innerHTML = "";
+    tableContainer.appendChild(table);
+}
+
+function submitTable() {
+    var rowCount = parseInt(document.getElementById("rowCount").value);
+    var colCount = parseInt(document.getElementById("colCount").value);
+
+    // Extract table data
+    var tableData = [];
+    for (var i = 1; i <= rowCount; i++) {
+        var row = [];
+        for (var j = 0; j < colCount; j++) {
+            var input = document.getElementsByName("cell" + i + "_" + j)[0];
+            row.push(input.value);
+        }
+        tableData.push(row);
+    }
+
+    // Store table data in localStorage
+    localStorage.setItem("tableData", JSON.stringify(tableData));
+
+    alert("Table data submitted and saved.");
+}
+</script>
+
+<a href="table.html" target="_blank">View Table</a>
+
+</body>
+</html>
